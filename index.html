@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Modern Calculator</h1>
+        <div class="calculator">
+            <div class="display">
+                <div id="result" class="result">0</div>
+                <div id="expression" class="expression"></div>
+            </div>
+            <form id="calculator-form">
+                <div class="input-group">
+                    <input type="number" id="num1" placeholder="First number" required>
+                    <input type="number" id="num2" placeholder="Second number" required>
+                </div>
+                <div class="operations">
+                    <button type="button" class="op-btn" data-op="add">+</button>
+                    <button type="button" class="op-btn" data-op="sub">-</button>
+                    <button type="button" class="op-btn" data-op="mul">×</button>
+                    <button type="button" class="op-btn" data-op="div">÷</button>
+                    <button type="button" class="op-btn" data-op="mod">%</button>
+                </div>
+                <button type="submit" class="equals-btn">=</button>
+            </form>
+            <div id="history" class="history"></div>
+        </div>
+    </div>
+    <script>
+        function calculate(){
+            event.preventDefault();
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operation=document.querySelector('.op-btn.active').getAttribute('data-op');
+            let result;
+
+            switch(operation){
+                case 'add':
+                    result=num1+num2;
+                    break;
+                case 'sub':
+                    result=num1-num2;
+                    break;
+
+                case 'mul':
+                    result=num1*num2;
+                    break;
+                case 'div':
+                    result=num1/num2;
+                    break;
+                case 'mod':
+                    result=num1%num2;
+                    break;
+                default:
+                    alert('invalid operation')
+
+                    return;
+                
+            }
+            document.getElementById('result').textContent=result;
+            console.log(result)
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const opBtns = document.querySelectorAll('.op-btn');
+            opBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    opBtns.forEach(btn => btn.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            document.querySelector('.equals-btn').addEventListener('click', calculate);
+        });
+    </script>
+</body>
+</html>
